@@ -10,18 +10,21 @@ class CaloriesTracker {
         this._displayCaloriesBurned();
         this._CaloriesRemaining();
         this._displayCaloriesProgress();
+      
     }
     //public methods API
     addMeal(meal) {
         this._meals.push(meal);
         this._totalCalories += meal.calories;
+        this._displayNewMeal(meal);
         this._render();
 
     }
 
-    addWorkOut(_WorkOut) {
-        this._WorkOut.push(_WorkOut);
-        this._totalCalories -= _WorkOut.calories;
+    addWorkOut(WorkOut) {
+        this._WorkOut.push(WorkOut);
+        this._totalCalories -= WorkOut.calories;
+        this._displayWorkout(WorkOut);
         this._render();
     }
 
@@ -30,12 +33,57 @@ class CaloriesTracker {
         const totalCaloriesEl = document.getElementById('calories-total');
         totalCaloriesEl.innerHTML = this._totalCalories;
     }
+    
+    _displayNewMeal(meal){
+        const mealEl = document.getElementById('meal-items');
+        const mealE= document.createElement('div');
+        mealE.classList.add('card','my-2');
+        mealEl.setAttribute('data-id',meal.id);
+        mealE.innerHTML = `   <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+          <h4 class="mx-1">${meal.name}</h4>
+          <div
+            class="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5"
+          >
+            ${meal.calories}
+          </div>
+          <button class="delete btn btn-danger btn-sm mx-2">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>`;
+      mealEl.appendChild(mealE);
+    }
+
+    _displayWorkout(WorkOut){
+        const workoutsEl = document.getElementById('workout-items');
+        const WorkOutEL= document.createElement('div');
+        WorkOutEL.classList.add('card','my-2');
+        WorkOutEL.setAttribute('data-id',WorkOut.id);
+        WorkOutEL.innerHTML = `   <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+          <h4 class="mx-1">${WorkOut.name}</h4>
+          <div
+            class="fs-1 bg-secondary text-white text-center rounded-2 px-2 px-sm-5"
+          >
+            ${WorkOut.calories}
+          </div>
+          <button class="delete btn btn-danger btn-sm mx-2">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>`;
+      workoutsEl.appendChild(WorkOutEL);
+    }
+
+
     _render() {
         this._displayCalloriesTotal();
         this._displayCaloriesConsumed();
         this._displayCaloriesBurned();
         this._CaloriesRemaining();
         this._displayCaloriesProgress();
+        
     }
 
     _displayTotalLimit() {
